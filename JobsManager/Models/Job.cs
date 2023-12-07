@@ -8,8 +8,8 @@
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public decimal Deposit { get; set; }
-        public decimal Balance { get; set; }
-        public DateTime Created { get; set; }
+        public decimal? Balance { get; set; } 
+        public DateTime? Created { get; set; }
         public DateTime ToBeCompleted { get; set; }
 
     }

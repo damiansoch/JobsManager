@@ -4,10 +4,10 @@
     {
         public Guid Id { get; set; }
         public Guid CustomerId { get; set; }
-        public int HouseNumber { get; set; }
-        public string AddressLine1 { get; set; }= string.Empty;
-        public string AddressLine2 { get; set; }= string.Empty;
-        public string AddressLine3 { get; set; }= string.Empty;
-        public string PostCode { get; set;}= string.Empty;
+        public int? HouseNumber { get; set; }
+        public string? AddressLine1 { get; set; }
+        public string? AddressLine2 { get; set; }
+        public string? AddressLine3 { get; set; }
+        public string? PostCode { get; set;}
     }
 }

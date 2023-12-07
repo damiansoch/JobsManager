@@ -8,7 +8,7 @@
         public string CompanyName { get; set; } = string.Empty;
         public DateTime Created { get; set; }
 
-        public Contact Contact { get; set; } = new Contact();
+        public Contact? Contact { get; set; } 
         public List<Job> Jobs { get; set; } = new List<Job>();
         public List<Address> Addresses { get; set; } = new List<Address>();
 
