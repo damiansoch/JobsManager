@@ -34,25 +34,7 @@ namespace JobsManager.Controllers
             }
         }
 
-        [HttpGet("{customerId:guid}")]
-        public async Task<ActionResult<List<Address>>> GetAllForCustomerAsync([FromRoute] Guid customerId)
-        {
-            try
-            {
-                var result = await _addressServise.GetAllForCustomer(customerId);
-                if (result is null)
-                    return NotFound("Customer with given Id does not exist");
-                if (!result.Any())
-                    return NotFound("No addresses found for given customer");
-                return Ok(result);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
+     
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)

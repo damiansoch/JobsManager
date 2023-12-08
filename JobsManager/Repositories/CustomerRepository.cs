@@ -20,7 +20,8 @@ namespace JobsManager.Repositories
                                       ,[LastName]
                                       ,[CompanyName]
                                       ,[Created]
-                                  FROM [dbo].[Customers]";
+                                  FROM [dbo].[Customers] 
+                                  ORDER BY [Created] desc";
 
             try
             {

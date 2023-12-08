@@ -22,21 +22,10 @@ namespace JobsManager.Services
             return result;
         }
 
-        public async Task<IEnumerable<Address>?> GetAllForCustomer(Guid customerId)
-        {
-            var existingCustomer = await _customerService.GetCustomerAsync(customerId);
-            if (existingCustomer is null)
-                return null;
-
-            var results = await _addressRepository.GetAllForCustomer(customerId);
-            return results;
-        }
-
         public async Task<int?> DeleteAsync(Guid id)
         {
-            var allAddresses = await GetAllAsync();
-            var existingAddress = allAddresses.FirstOrDefault(x=>x.Id==id);
-            if(existingAddress is null)
+            var existingAddress = await DoesAddressExist(id);
+            if (existingAddress is null)
                 return null;
 
             var response = await _addressRepository.DeleteAsync(id);
@@ -66,8 +55,7 @@ namespace JobsManager.Services
 
         public async Task<int?> UpdateAsync(Guid id, UpdateAddressRequestDto updateAddressRequestDto)
         {
-            var allAddresses = await GetAllAsync();
-            var existingAddress = allAddresses.FirstOrDefault(x => x.Id == id);
+            var existingAddress = await DoesAddressExist(id);
             if (existingAddress is null)
                 return null;
 
@@ -79,6 +67,13 @@ namespace JobsManager.Services
 
             var response = await _addressRepository.UpdateAsync(existingAddress);
             return response;
+        }
+
+        private async Task<Address?> DoesAddressExist(Guid id)
+        {
+            var allAddresses = await GetAllAsync();
+            var existingAddress = allAddresses.FirstOrDefault(x => x.Id == id);
+            return existingAddress ?? null;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Transactions;
 using JobsManager.Dtos;
+using JobsManager.Helpers;
 using JobsManager.Models;
 using JobsManager.Repositories.Interfaces;
 using JobsManager.Services.Interfaces;
@@ -10,11 +11,13 @@ namespace JobsManager.Services
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly IContactServise _contactServise;
+        private readonly IGetData _getData;
 
-        public CustomerService(ICustomerRepository customerRepository,IContactServise contactServise)
+        public CustomerService(ICustomerRepository customerRepository,IContactServise contactServise,IGetData getData)
         {
             _customerRepository = customerRepository;
             _contactServise = contactServise;
+            _getData = getData;
         }
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {
@@ -28,10 +31,17 @@ namespace JobsManager.Services
 
             if (result is null) return result;
 
+            //getting the contact for the customer
             var allContacts = await _contactServise.GetAllAsync();
             var customerContact = allContacts.FirstOrDefault(x=>x.CustomerId==customerId);
             if (customerContact is not null) 
                 result.Contact = customerContact;
+            //getting all jobs for customer
+            var jobs = await _getData.GetAllJobsForCustomer(customerId);
+            result.Jobs = jobs.ToList();
+            //getting all addresses for customer
+            var addresses = await _getData.GetAllAddressesForCustomer(customerId);
+            result.Addresses = addresses.ToList();
             return result;
         }
 
@@ -45,8 +55,13 @@ namespace JobsManager.Services
             return response;
         }
 
-        public async Task<Tuple<Guid?, Customer>> CreateAsync(AddCustomerRequestDto addCustomerRequestDto)
+        public async Task<Tuple<Guid?, Customer>?> CreateAsync(AddCustomerRequestDto addCustomerRequestDto)
         {
+            var allContacts = await _contactServise.GetAllAsync();
+            var existingEmail = allContacts.FirstOrDefault(x =>
+                string.Equals(x.Email, addCustomerRequestDto.Email, StringComparison.OrdinalIgnoreCase));
+            if (existingEmail is not null)
+                return null;
             var customer = new Customer
             {
                 Id = Guid.NewGuid(),

@@ -1,4 +1,5 @@
 
+using JobsManager.Helpers;
 using JobsManager.Models;
 using JobsManager.Repositories;
 using JobsManager.Repositories.Interfaces;
@@ -22,6 +23,7 @@ namespace JobsManager
             builder.Services.AddScoped<IAddressServise, AddressServise>(); 
             builder.Services.AddScoped<IJobRepository, JobRepository>();
             builder.Services.AddScoped<IJobServise, JobServise>();
+            builder.Services.AddScoped<IGetData, GetData>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

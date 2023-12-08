@@ -22,16 +22,6 @@ namespace JobsManager.Services
             return result;
         }
 
-        public async Task<IEnumerable<Job>?> GetAllJobsForCustomerAsync(Guid customerId)
-        {
-            var existingCustomer = await _customerService.GetCustomerAsync(customerId);
-            if (existingCustomer is null)
-                return null;
-
-            var result = await _jobRepository.GetAllJobsForCustomerAsync(customerId);
-            return result;
-        }
-
         public async Task<int?> CreateJobAsync(Guid customerId, AddJobRequestDto addJobRequestDto)
         {
             var existingCustomer = await _customerService.GetCustomerAsync(customerId);

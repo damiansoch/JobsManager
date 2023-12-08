@@ -8,7 +8,7 @@ namespace JobsManager.Services.Interfaces
         Task<IEnumerable<Customer>> GetAllAsync();
         Task<Customer?> GetCustomerAsync(Guid customerId);
         Task<int?> Delete(Guid customerId);
-        Task<Tuple<Guid?,Customer>> CreateAsync(AddCustomerRequestDto addCustomerRequestDto);
+        Task<Tuple<Guid?,Customer>?> CreateAsync(AddCustomerRequestDto addCustomerRequestDto);
         Task<int?> UpdateAsync(Guid customerId,UpdateCustomerRequestDto updateCustomerRequestDto);
     }
 }

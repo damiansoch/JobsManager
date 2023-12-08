@@ -35,20 +35,6 @@ namespace JobsManager.Controllers
             }
         }
 
-        [HttpGet("{customerId:guid}")]
-        public async Task<ActionResult<List<Job>>> GetAllForCustomerAsync([FromRoute] Guid customerId)
-        {
-            try
-            {
-                var result = await _jobServise.GetAllJobsForCustomerAsync(customerId);
-                return result is null? NotFound("Customer with given id not found"): !result.Any() ? BadRequest("No jobs found") : Ok(result);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
 
         [HttpPost("{customerId:guid}")]
         public async Task<IActionResult> CreateJobAsync([FromRoute] Guid customerId,

@@ -79,6 +79,8 @@ namespace JobsManager.Controllers
             try
             {
                 var result = await _customerService.CreateAsync(addCustomerRequestDto);
+                if (result is null)
+                    return BadRequest("This email address already exist");
                 if (result.Item1 is null)
                     return BadRequest("Something went wrong");
 
