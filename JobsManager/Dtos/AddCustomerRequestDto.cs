@@ -14,9 +14,15 @@ namespace JobsManager.Dtos
         [Required]
         [MaxLength(255)]
         public string CompanyName { get; set; } = string.Empty;
+        [Required]
+        [MaxLength(50)]
         public string PhoneNumber { get; set; } = string.Empty;
-        public string PhoneNumber2 { get; set; } = string.Empty;
+        [MaxLength(50)]
+        public string? PhoneNumber2 { get; set; }
+        [Required]
+        [MaxLength(200)]
+        [EmailAddress]
         public string Email { get; set; } = string.Empty;
-        public string ExtraDetails { get; set; } = string.Empty;
+        public string? ExtraDetails { get; set; }
     }
 }
