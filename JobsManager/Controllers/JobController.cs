@@ -85,5 +85,20 @@ namespace JobsManager.Controllers
                 throw;
             }
         }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<Job>> GetByIdAsync([FromRoute]Guid id)
+        {
+            try
+            {
+                var response = await _jobServise.GetByIdAsync(id);
+                return response is null ? NotFound("Job not found") : Ok(response);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

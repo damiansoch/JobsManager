@@ -9,5 +9,6 @@ namespace JobsManager.Repositories.Interfaces
         Task<int>CreateJobAsync(Job job);
         Task<int>UpdateJobAsync(Job job);
         Task<int>DeleteJobAsync(Guid id);
+        Task<Job?> GetByIdAsync(Guid id);
     }
 }

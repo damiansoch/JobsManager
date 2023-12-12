@@ -71,5 +71,11 @@ namespace JobsManager.Services
             var response = await _jobRepository.DeleteJobAsync(id);
             return response;
         }
+
+        public async Task<Job?> GetByIdAsync(Guid id)
+        {
+            var result = await _jobRepository.GetByIdAsync(id);
+            return result;
+        }
     }
 }

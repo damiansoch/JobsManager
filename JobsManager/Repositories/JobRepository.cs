@@ -25,7 +25,7 @@ namespace JobsManager.Repositories
                                       ,[Created]
                                       ,[ToBeCompleted]
                                   FROM [dbo].[Jobs]
-                                  ORDER BY [Created] desc";
+                                  ORDER BY [ToBeCompleted] desc";
             try
             {
                 await using var connection = new SqlConnection(_connectionString);
@@ -149,6 +149,32 @@ namespace JobsManager.Repositories
             {
                 await using var connection = new SqlConnection(_connectionString);
                 var result = await connection.ExecuteAsync(query, new { Id = id });
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<Job?> GetByIdAsync(Guid id)
+        {
+            const string query = @"SELECT [Id]
+                                  ,[CustomerId]
+                                  ,[Name]
+                                  ,[Description]
+                                  ,[Price]
+                                  ,[Deposit]
+                                  ,[Balance]
+                                  ,[Created]
+                                  ,[ToBeCompleted]
+                              FROM [dbo].[Jobs]
+                              WHERE Id = @Id";
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                var result = await connection.QueryFirstOrDefaultAsync<Job>(query, new { Id = id });
                 return result;
             }
             catch (Exception e)
