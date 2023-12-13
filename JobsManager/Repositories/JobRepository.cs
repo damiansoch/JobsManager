@@ -25,7 +25,7 @@ namespace JobsManager.Repositories
                                       ,[Created]
                                       ,[ToBeCompleted]
                                   FROM [dbo].[Jobs]
-                                  ORDER BY [ToBeCompleted] desc";
+                                  ORDER BY [ToBeCompleted]";
             try
             {
                 await using var connection = new SqlConnection(_connectionString);
