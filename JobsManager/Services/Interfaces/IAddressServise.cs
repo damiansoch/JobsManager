@@ -9,5 +9,6 @@ namespace JobsManager.Services.Interfaces
         Task<int?> DeleteAsync(Guid id);
         Task<int?> CreateAsync(Guid customerId,AddAddressRequestDto addAddressRequestDto);
         Task<int?> UpdateAsync( Guid id,UpdateAddressRequestDto updateAddressRequestDto);
+        Task<Address?> GetById(Guid id);
     }
 }

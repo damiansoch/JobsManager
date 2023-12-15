@@ -37,5 +37,20 @@ namespace JobsManager.Controllers
                 throw;
             }
         }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<Contact>> GetByIdAsync([FromRoute] Guid id)
+        {
+            try
+            {
+                var result = await _contactServise.GetByIdAsync(id);
+                return result is null ? NotFound("Contact not found") : Ok(result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

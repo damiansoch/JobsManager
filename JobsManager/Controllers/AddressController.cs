@@ -84,5 +84,21 @@ namespace JobsManager.Controllers
                 throw;
             }
         }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<Address>> GetByIdAsync([FromRoute] Guid id)
+        {
+            try
+            {
+                var response = await _addressServise.GetById(id);
+                return response is null ? NotFound("Address not found") 
+                    : Ok(response);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

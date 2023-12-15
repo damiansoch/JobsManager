@@ -105,5 +105,28 @@ namespace JobsManager.Repositories
                 throw;
             }
         }
+
+        public async Task<Contact?> GetByIdAsync(Guid id)
+        {
+            const string query = @"SELECT [Id]
+                                      ,[CustomerId]
+                                      ,[PhoneNumber]
+                                      ,[PhoneNumber2]
+                                      ,[Email]
+                                      ,[ExtraDetails]
+                                  FROM [dbo].[Contacts]
+                                  WHERE Id = @Id";
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                var result = await connection.QueryFirstOrDefaultAsync<Contact>(query,new {Id = id});
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

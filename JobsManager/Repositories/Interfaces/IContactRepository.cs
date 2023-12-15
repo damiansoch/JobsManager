@@ -8,5 +8,6 @@ namespace JobsManager.Repositories.Interfaces
         Task<IEnumerable<Contact>> GetAllAsync();
         Task<int> CreateAsync( Contact contact);
         Task<int> UpdateAsync( Contact contact );
+        Task<Contact?>GetByIdAsync(Guid id );
     }
 }

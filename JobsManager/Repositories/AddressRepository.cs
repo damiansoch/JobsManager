@@ -147,5 +147,29 @@ namespace JobsManager.Repositories
                 throw;
             }
         }
+
+        public async Task<Address?> GetById(Guid id)
+        {
+            const string query = @"SELECT [Id]
+                                      ,[CustomerId]
+                                      ,[HouseNumber]
+                                      ,[AddressLine1]
+                                      ,[AddressLine2]
+                                      ,[AddressLine3]
+                                      ,[PostCode]
+                                  FROM [dbo].[Addresses] 
+                                  WHERE Id = @Id;";
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                var result = await connection.QueryFirstOrDefaultAsync<Address>(query, new { Id = id });
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

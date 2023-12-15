@@ -69,6 +69,12 @@ namespace JobsManager.Services
             return response;
         }
 
+        public async Task<Address?> GetById(Guid id)
+        {
+            var response = await _addressRepository.GetById(id);
+            return response;
+        }
+
         private async Task<Address?> DoesAddressExist(Guid id)
         {
             var allAddresses = await GetAllAsync();

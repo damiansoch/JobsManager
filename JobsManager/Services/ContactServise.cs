@@ -40,5 +40,11 @@ namespace JobsManager.Services
             var result = await _contactRepository.UpdateAsync(existingContact);
             return result;
         }
+
+        public async Task<Contact?> GetByIdAsync(Guid id)
+        {
+            var result = await _contactRepository.GetByIdAsync(id);
+            return result;
+        }
     }
 }
