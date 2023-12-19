@@ -10,5 +10,6 @@ namespace JobsManager.Services.Interfaces
         Task<int?> UpdateJobAsync(Guid id,UpdateJobRequestDto updateJobRequestDto);
         Task<int?> DeleteJobAsync(Guid id);
         Task<Job?> GetByIdAsync(Guid id);
+        Task<int?> MarkJobCompletedAsync(bool completed, Guid id);
     }
 }

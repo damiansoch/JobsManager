@@ -100,5 +100,22 @@ namespace JobsManager.Controllers
                 throw;
             }
         }
+
+        [HttpPut("{id:guid}/{completed:bool}")]
+        public async Task<IActionResult> MarkCompletedAsync([FromRoute] Guid id, [FromRoute] bool completed)
+        {
+            try
+            {
+                var response = await _jobServise.MarkJobCompletedAsync(completed, id);
+                return response is null ? NotFound("Job not found") :
+                    response < 1 ? BadRequest("Something went wrong") : Ok("Job updated");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
     }
 }

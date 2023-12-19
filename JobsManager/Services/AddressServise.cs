@@ -38,6 +38,7 @@ namespace JobsManager.Services
             if (existingCustomer is null)
                 return null;
 
+
             var address = new Address
             {
                 Id = Guid.NewGuid(),

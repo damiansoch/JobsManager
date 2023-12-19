@@ -11,6 +11,7 @@
         public decimal? Balance { get; set; } 
         public DateTime? Created { get; set; }
         public DateTime ToBeCompleted { get; set; }
+        public bool Completed { get; set; }
 
     }
 }

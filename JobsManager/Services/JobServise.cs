@@ -77,5 +77,16 @@ namespace JobsManager.Services
             var result = await _jobRepository.GetByIdAsync(id);
             return result;
         }
+
+        public async Task<int?> MarkJobCompletedAsync(bool completed, Guid id)
+        {
+            var allJobs = await GetAllAsync();
+            var existingJob = allJobs.FirstOrDefault(x => x.Id == id);
+            if (existingJob is null)
+                return null;
+
+            var response = await _jobRepository.MarkJobCompletedAsync(completed,id);
+            return response;
+        }
     }
 }

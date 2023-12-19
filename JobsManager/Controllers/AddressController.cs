@@ -1,4 +1,5 @@
 ﻿using JobsManager.Dtos;
+using JobsManager.Helpers;
 using JobsManager.Models;
 using JobsManager.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -58,6 +59,10 @@ namespace JobsManager.Controllers
         {
             try
             {
+                var areAllPropertiesNull = addAddressRequestDto.AreAllPropertiesNull();
+                if (areAllPropertiesNull)
+                    return BadRequest("Can't add an address with no data");
+
                 var response = await _addressServise.CreateAsync(customerId, addAddressRequestDto);
                 return response is null ? NotFound("Customer with given id not found") : response < 1 ? BadRequest("Something went wrong") : Ok("Address Added");
             }
@@ -74,6 +79,10 @@ namespace JobsManager.Controllers
         {
             try
             {
+                var areAllPropertiesNull = updateAddressRequestDto.AreAllPropertiesNull();
+                if (areAllPropertiesNull)
+                    return BadRequest("Can't add an address with no data");
+
                 var response = await _addressServise.UpdateAsync(id, updateAddressRequestDto);
                 return response is null ? NotFound("Address not found") :
                     response < 1 ? BadRequest("Something went wrong") : Ok("Address updated");

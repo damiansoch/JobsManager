@@ -24,6 +24,7 @@ namespace JobsManager.Repositories
                                       ,[Balance]
                                       ,[Created]
                                       ,[ToBeCompleted]
+                                      ,[Completed]
                                   FROM [dbo].[Jobs]
                                   ORDER BY [ToBeCompleted]";
             try
@@ -50,6 +51,7 @@ namespace JobsManager.Repositories
                                       ,[Balance]
                                       ,[Created]
                                       ,[ToBeCompleted]
+                                      ,[Completed]
                                   FROM [dbo].[Jobs] 
                                   WHERE CustomerId = @CustomerId";
             try
@@ -169,12 +171,36 @@ namespace JobsManager.Repositories
                                   ,[Balance]
                                   ,[Created]
                                   ,[ToBeCompleted]
+                                  ,[Completed]
+
                               FROM [dbo].[Jobs]
                               WHERE Id = @Id";
             try
             {
                 await using var connection = new SqlConnection(_connectionString);
                 var result = await connection.QueryFirstOrDefaultAsync<Job>(query, new { Id = id });
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<int> MarkJobCompletedAsync(bool completed, Guid id)
+        {
+            const string query = @"UPDATE [dbo].[Jobs]
+                                       SET [Completed] = @Completed
+                                     WHERE Id = @Id";
+            try
+            {
+                await using var connection = new SqlConnection(_connectionString);
+                var result = await connection.ExecuteAsync(query, new
+                {
+                    Completed = completed,
+                    Id = id
+                });
                 return result;
             }
             catch (Exception e)
